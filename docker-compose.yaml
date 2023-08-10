@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  web:
+    container_name: centos7-php8.1
+    working_dir: /var/www/html
+    build:
+        context: ./docker
+    network_mode: bridge
+    environment:
+      - "db_user=test_db_user"
+    volumes:
+      - ./app:/var/www/html
+      - ./docker/init.sh:/docker-entrypoint-initdb.d/init.sh
+    entrypoint: /docker-entrypoint-initdb.d/init.sh
+    ports:
+      - "80:80"
+    hostname: centos7-php8.1.local
